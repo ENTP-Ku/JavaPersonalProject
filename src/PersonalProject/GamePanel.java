@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private int obstacleSpeed; // 장애물의 현재 속도
     private long startTime; // 게임 시작 시간을 기록하는 변수
     private Ground ground; // 바닥 객체
-    private AudioPlayer audioPlayer;
+    private AudioPlayer audioPlayer; // 오디오 객체
 
     /**
      * GamePanel 생성자
@@ -128,8 +128,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 updateTimer.stop(); // 충돌 시 타이머를 정지
                 speedIncreaseTimer.stop(); // 속도 증가 타이머도 정지
                 audioPlayer.stop(); // 배경음악 정지
-                JOptionPane.showMessageDialog(this, "Game Over"); // 게임 종료 메시지
-                System.exit(0); // 프로그램 종료
+                gameOver(); // 게임 종료 처리
             }
 
             // 장애물이 화면을 벗어나면 제거하고 새로운 장애물 생성
@@ -140,6 +139,38 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         }
 
         repaint(); // 화면 다시 그리기
+    }
+
+    /**
+     * 게임 종료 처리 메서드
+     */
+    private void gameOver() {
+        int result = JOptionPane.showConfirmDialog(this, "게임이 종료되었습니다. 다시 시작하시겠습니까?", "게임 종료", JOptionPane.YES_NO_OPTION);
+
+        if (result == JOptionPane.YES_OPTION) {
+            resetGame(); // 게임 리셋
+        } else {
+            System.exit(0); // 프로그램 종료
+        }
+    }
+
+    /**
+     * 게임을 리셋합니다.
+     */
+    private void resetGame() {      
+        obstacleSpeed = 20; // 초기 장애물 속도 설정
+        player = new Player(50, 450); // 플레이어 객체 새로 생성
+        startTime = System.currentTimeMillis(); // 게임 시작 시간 초기화
+        ground = new Ground(500, 1500, 50, obstacleSpeed); // 바닥 객체 새로 생성
+
+        // 배경음악 재생
+        audioPlayer = new AudioPlayer();
+        audioPlayer.play("src\\bgm.wav"); // 배경음악 파일 경로
+
+        updateTimer.start(); // 타이머 재시작
+        speedIncreaseTimer.start(); // 속도 증가 타이머 재시작
+
+        spawnRandomObstacle(); // 새로운 장애물 생성
     }
 
     /**
