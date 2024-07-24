@@ -47,10 +47,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         updateTimer.start();
 
         // 속도 증가 타이머 설정: 5초마다 장애물 속도 증가
-        speedIncreaseTimer = new Timer(5000, new ActionListener() {
+        speedIncreaseTimer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                obstacleSpeed += 2; // 장애물 속도 증가
+                obstacleSpeed += 1; // 장애물 속도 증가
                 if (currentObstacle != null) {
                     currentObstacle.setSpeed(obstacleSpeed); // 현재 장애물의 속도 업데이트
                 }
