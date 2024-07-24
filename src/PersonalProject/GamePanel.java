@@ -31,11 +31,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     public GamePanel() {
         player = new Player(50, 450); // 플레이어 객체 생성
         random = new Random(); // 랜덤 객체 초기화
-<<<<<<< HEAD
+
         obstacleSpeed = 20; // 초기 장애물 속도 설정
-=======
-        obstacleSpeed = 10; // 초기 장애물 속도 설정
->>>>>>> db489d17cc70dd8cc68ffcec2497e3baf8cfb0df
+
         startTime = System.currentTimeMillis(); // 게임 시작 시간 기록
 
         ground = new Ground(500, 1500, 50, obstacleSpeed); // 바닥 객체 생성

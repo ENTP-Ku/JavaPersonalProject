@@ -29,11 +29,9 @@ public class Player {
     // 애니메이션 관련 변수
     private double currentRotation = 0.0;
     private double targetRotation = 0.0;
-<<<<<<< HEAD
     private final double rotationSpeed=150; //회전량
-=======
-    private final double rotationSpeed=300; //회전량
->>>>>>> db489d17cc70dd8cc68ffcec2497e3baf8cfb0df
+
+
     private Timer rotationTimer;
     private boolean isRotating = false;
 
