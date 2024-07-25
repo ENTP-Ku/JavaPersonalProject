@@ -1,0 +1,67 @@
+package third_dimention;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class CubeGame extends JFrame {
+    private static final int WINDOW_WIDTH = 800;
+    private static final int WINDOW_HEIGHT = 600;
+    private static final int CUBE_SIZE = 50;
+    private int cubeX = WINDOW_WIDTH / 2 - CUBE_SIZE / 2;
+    private int cubeY = WINDOW_HEIGHT / 2 - CUBE_SIZE / 2;
+    private static final int MOVE_STEP = 10;
+
+    public CubeGame() {
+        setTitle("Cube Game");
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        CubePanel panel = new CubePanel();
+        add(panel);
+
+        // Add key listener for arrow key controls
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_LEFT:
+                        cubeX -= MOVE_STEP;
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        cubeX += MOVE_STEP;
+                        break;
+                    case KeyEvent.VK_UP:
+                        cubeY -= MOVE_STEP;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        cubeY += MOVE_STEP;
+                        break;
+                }
+                panel.repaint();
+            }
+        });
+
+        setFocusable(true);
+    }
+
+    private class CubePanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.setColor(Color.BLUE);
+            g.fillRect(cubeX, cubeY, CUBE_SIZE, CUBE_SIZE);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            CubeGame game = new CubeGame();
+            game.setVisible(true);
+        });
+    }
+}

@@ -1,0 +1,94 @@
+package qwerqwerqwer;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Random;
+
+public class DodgeGame extends JPanel implements ActionListener, KeyListener {
+
+    private Timer timer;
+    private Plane plane;
+    private ArrayList<Bullet> bullets = new ArrayList<>();
+    private Random random = new Random();
+
+    public DodgeGame() {
+        plane = new Plane(300, 500);
+        // Timer 객체를 올바르게 생성합니다.
+        timer = new Timer(20, this); // 20 밀리초마다 actionPerformed 호출
+        timer.start(); // Timer 시작
+        addKeyListener(this);
+        setFocusable(true);
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        plane.draw(g);
+        drawBullets(g);
+    }
+
+    private void drawBullets(Graphics g) {
+        for (Bullet bullet : bullets) {
+            bullet.draw(g);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Move bullets
+        ArrayList<Bullet> bulletsToRemove = new ArrayList<>();
+        for (Bullet bullet : bullets) {
+            bullet.move();
+            if (bullet.isOffScreen(getHeight())) {
+                bulletsToRemove.add(bullet);
+            }
+        }
+        bullets.removeAll(bulletsToRemove);
+
+        // Add new bullets
+        if (random.nextInt(100) < 5) { // Random chance to add new bullet
+            bullets.add(new Bullet(random.nextInt(getWidth()), 0));
+        }
+
+        // Check collision
+        Rectangle planeRect = plane.getRectangle();
+        for (Bullet bullet : bullets) {
+            if (planeRect.intersects(bullet.getRectangle())) {
+                System.out.println("Game Over");
+                System.exit(0);
+            }
+        }
+
+        repaint();
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_LEFT) {
+            plane.moveLeft();
+        } else if (keyCode == KeyEvent.VK_RIGHT) {
+            plane.moveRight(getWidth());
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Dodge Game");
+        DodgeGame gamePanel = new DodgeGame();
+        frame.add(gamePanel);
+        frame.setSize(600, 600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}

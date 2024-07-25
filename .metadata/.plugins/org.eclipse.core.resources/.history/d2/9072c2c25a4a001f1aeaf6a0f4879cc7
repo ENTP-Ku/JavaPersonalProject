@@ -1,0 +1,45 @@
+package third_dimention;
+
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+public class Simple3DExample extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        // 비행기와 총알을 생성합니다.
+        Plane plane = new Plane(100, 50, 10); // 비행기의 크기를 설정합니다.
+        plane.setTranslateX(200); // 비행기의 X 위치를 설정합니다.
+        plane.setTranslateY(200); // 비행기의 Y 위치를 설정합니다);
+        plane.setTranslateZ(-300); // 비행기의 Z 위치를 설정합니다.
+
+        Bullet bullet = new Bullet(10); // 총알의 반지름을 설정합니다.
+        bullet.setTranslateX(250); // 총알의 X 위치를 설정합니다.
+        bullet.setTranslateY(150); // 총알의 Y 위치를 설정합니다.
+        bullet.setTranslateZ(-250); // 총알의 Z 위치를 설정합니다.
+
+        // 카메라를 설정합니다.
+        PerspectiveCamera camera = new PerspectiveCamera(true);
+        camera.setTranslateZ(-500); // 카메라의 Z 위치를 설정합니다.
+
+        // 3D 장면을 설정합니다.
+        Group root = new Group(plane, bullet);
+        Scene scene = new Scene(root, 800, 600, true);
+        scene.setFill(Color.LIGHTGRAY); // 배경 색상을 설정합니다.
+        scene.setCamera(camera);
+
+        // 스테이지를 설정합니다.
+        primaryStage.setTitle("Simple 3D Example");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}

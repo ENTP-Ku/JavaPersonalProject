@@ -1,0 +1,26 @@
+package com.study2;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+//JSON 데이터 형식 출력
+@RestController
+public class MemberApi {
+	
+	private JdbcTemplate jdbcTemplate;
+	
+	@GetMapping("/members")
+	public List<String> members(){
+		String sql = "select email from member order by email";
+		
+		return jdbcTemplate.queryForList(sql, String.class);	
+	}
+	//setter() DI
+	@Autowired
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;//연결정보 저장
+	}
+}

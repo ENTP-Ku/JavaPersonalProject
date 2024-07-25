@@ -1,0 +1,19 @@
+package com.study2;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+//@ComponentScan- 실행할 스캔(Controller,Servlet)대상 범위
+// 1. 스캔 대상의 중복된 Url Mapping이 있는 모든 프로그램 실행중지
+// 2. 주의-스캔 대상 범위를 벗어난 경우 벗어난 컨트롤러 실행중지
+@ComponentScan(basePackages = {"com.study2","com.study2.board"})
+@SpringBootApplication
+public class Study2Application {
+
+	public static void main(String[] args) {
+		
+		SpringApplication.run(Study2Application.class, args);
+	    
+	}
+
+}

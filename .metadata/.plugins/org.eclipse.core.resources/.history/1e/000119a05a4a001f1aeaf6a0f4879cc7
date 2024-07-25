@@ -1,0 +1,50 @@
+package third_dimention;
+
+import javafx.animation.AnimationTimer;
+import javafx.scene.Group;
+
+public class Game {
+
+    private Plane plane;
+    private Bullet bullet;
+    private Group root;
+
+    public Game(Group root) {
+        this.root = root;
+        initialize();
+    }
+
+    private void initialize() {
+        // 비행기와 총알을 생성하고 초기화합니다.
+        plane = new Plane(100, 50, 10);
+        plane.setTranslateX(200);
+        plane.setTranslateY(200);
+        plane.setTranslateZ(-300);
+
+        bullet = new Bullet(10);
+        bullet.setTranslateX(250);
+        bullet.setTranslateY(150);
+        bullet.setTranslateZ(-250);
+
+        root.getChildren().addAll(plane, bullet);
+
+        // 애니메이션 타이머를 설정하여 게임 루프를 생성합니다.
+        new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                update();
+                render();
+            }
+        }.start();
+    }
+
+    private void update() {
+        // 게임 상태를 업데이트하는 로직을 추가합니다.
+        // 예를 들어, 총알을 이동시키거나 충돌을 감지합니다.
+    }
+
+    private void render() {
+        // 게임 화면을 렌더링하는 로직을 추가합니다.
+        // 이 예제에서는 렌더링 작업이 필요하지 않습니다.
+    }
+}

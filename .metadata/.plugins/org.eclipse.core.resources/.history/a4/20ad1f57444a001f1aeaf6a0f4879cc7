@@ -1,0 +1,49 @@
+package com.study2.board;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+//@RestController- JSON 형식으로 출력(html, jsp필요없음)
+@RestController
+public class BoardController {
+	
+	public BoardController() {
+		System.out.println("===>BoardController 생성");
+	}
+//http://localhost:8090/hello
+//http://localhost:8090/hello?name=hong
+	@GetMapping("/hello")
+	public String hello(String name) {	
+		return "Hello : "+name;		
+	}
+	
+	@GetMapping("/getBoard")
+	public BoardVO getBoard() {
+		BoardVO b = new BoardVO();
+		b.setSeq(1);
+		b.setTitle("테스트 제목..");
+		b.setWriter("테스터");
+		b.setContent("테스트 내용입니다...");
+		b.setCreteDate(new Date());
+		b.setCnt(0);
+		return b;		
+	}
+	@GetMapping("/getBoardList")
+	public ArrayList<BoardVO> getBoardList() {
+		ArrayList<BoardVO> a = new ArrayList<>();
+		for(int i=0; i<=10; i++) {
+			BoardVO b = new BoardVO();
+			b.setSeq(i);
+			b.setTitle("테스트 제목"+i);
+			b.setWriter("테스터");
+			b.setContent(i+"번째 테스트 내용입니다...");
+			b.setCreteDate(new Date());
+			b.setCnt(0);
+			
+			a.add(b);
+		}
+		return a;		
+	}
+}

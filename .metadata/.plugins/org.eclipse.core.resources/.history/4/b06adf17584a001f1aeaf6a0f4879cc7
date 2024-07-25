@@ -1,0 +1,33 @@
+import java.awt.*;
+
+public class Plane {
+    private Rectangle rectangle;
+    private final int width = 50;
+    private final int height = 30;
+    private final int moveAmount = 10;
+
+    public Plane(int x, int y) {
+        rectangle = new Rectangle(x, y, width, height);
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void moveLeft() {
+        if (rectangle.x > 0) {
+            rectangle.x -= moveAmount;
+        }
+    }
+
+    public void moveRight(int screenWidth) {
+        if (rectangle.x < screenWidth - width) {
+            rectangle.x += moveAmount;
+        }
+    }
+
+    public void draw(Graphics g) {
+        g.setColor(Color.BLUE);
+        g.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+    }
+}

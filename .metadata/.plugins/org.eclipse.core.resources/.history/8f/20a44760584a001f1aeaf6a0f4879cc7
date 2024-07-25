@@ -1,0 +1,100 @@
+package qwerqwerqwer;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Timer;
+
+public class DodgeGame extends JPanel implements ActionListener, KeyListener {
+
+    private Timer timer;
+    private int planeX = 300;
+    private int planeY = 500;
+    private ArrayList<Rectangle> bullets = new ArrayList<>();
+    private Random random = new Random();
+
+    public DodgeGame() {
+        timer = new Timer(20, this); // Update every 20 milliseconds
+        timer.start();
+        addKeyListener(this);
+        setFocusable(true);
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawPlane(g);
+        drawBullets(g);
+    }
+
+    private void drawPlane(Graphics g) {
+        g.setColor(Color.BLUE);
+        g.fillRect(planeX, planeY, 50, 30);
+    }
+
+    private void drawBullets(Graphics g) {
+        g.setColor(Color.RED);
+        for (Rectangle bullet : bullets) {
+            g.fillRect(bullet.x, bullet.y, 10, 20);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Move bullets
+        ArrayList<Rectangle> bulletsToRemove = new ArrayList<>();
+        for (Rectangle bullet : bullets) {
+            bullet.y += 5;
+            if (bullet.y > getHeight()) {
+                bulletsToRemove.add(bullet);
+            }
+        }
+        bullets.removeAll(bulletsToRemove);
+
+        // Add new bullets
+        if (random.nextInt(100) < 5) { // Random chance to add new bullet
+            bullets.add(new Rectangle(random.nextInt(getWidth()), 0, 10, 20));
+        }
+
+        // Check collision
+        Rectangle planeRect = new Rectangle(planeX, planeY, 50, 30);
+        for (Rectangle bullet : bullets) {
+            if (planeRect.intersects(bullet)) {
+                System.out.println("Game Over");
+                System.exit(0);
+            }
+        }
+
+        repaint();
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_LEFT && planeX > 0) {
+            planeX -= 10;
+        } else if (keyCode == KeyEvent.VK_RIGHT && planeX < getWidth() - 50) {
+            planeX += 10;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Dodge Game");
+        DodgeGame gamePanel = new DodgeGame();
+        frame.add(gamePanel);
+        frame.setSize(600, 600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
