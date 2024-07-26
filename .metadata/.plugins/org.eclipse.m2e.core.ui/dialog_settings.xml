@@ -6,6 +6,8 @@
 	</section>
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\BootSTS4Space\demo"/>
+			<item value="C:\BootSTS4Space\study2"/>
 			<item value="C:\BootSTS4Space\study1"/>
 			<item value="C:\BootSTS4Space"/>
 			<item value="C:\BootSTS4Space\ioc_di"/>
